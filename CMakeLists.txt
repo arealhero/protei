@@ -11,4 +11,4 @@ add_executable(server
         server_side/src/handlers/sum_request_handler.cc
         server_side/src/server.cc)
 
-add_executable(client client/main.cc)
+add_executable(client client_side/main.cc client_side/src/sockets/client_socket.h client_side/src/sockets/tcp_client_socket.cc client_side/src/sockets/tcp_client_socket.h client_side/src/sockets/udp_client_socket.cc client_side/src/sockets/udp_client_socket.h)

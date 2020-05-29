@@ -1,11 +1,12 @@
-#ifndef PROTEI_CLIENT_CLIENT_SOCKET_H_
-#define PROTEI_CLIENT_CLIENT_SOCKET_H_
+#ifndef PROTEI_CLIENT_SOCKETS_CLIENT_SOCKET_H_
+#define PROTEI_CLIENT_SOCKETS_CLIENT_SOCKET_H_
 
 #include <cstdint>
 #include <string>
 
 #include <protei/network/socket.hpp>
 
+namespace client_side::sockets {
 class client_socket
 {
  public:
@@ -20,5 +21,6 @@ class client_socket
  protected:
   protei::network::socket socket;
 };
+}
 
 #endif

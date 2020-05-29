@@ -45,7 +45,13 @@ class socket
   template<typename T>
   void set_option(const int option, const T& value) const
   {
-    invoke(::setsockopt, "Failed to set socket option", fd, SOL_SOCKET, option, &value, sizeof(value));
+    invoke(::setsockopt,
+           "Failed to set socket option",
+           fd,
+           SOL_SOCKET,
+           option,
+           &value,
+           sizeof(value));
   }
 
   void set_non_block() const
@@ -55,12 +61,20 @@ class socket
       flags = 0;
     }
 
-    invoke(::fcntl, "Failed to set socket's I/O to non-blocking", fd, F_SETFL, flags | O_NONBLOCK);
+    invoke(::fcntl,
+           "Failed to set socket's I/O to non-blocking",
+           fd,
+           F_SETFL,
+           flags | O_NONBLOCK);
   }
 
   void connect(const sockaddr_in& socket_address) const
   {
-    invoke(::connect, "Failed to connect", fd, (sockaddr*)&socket_address, sizeof(socket_address));
+    invoke(::connect,
+           "Failed to connect",
+           fd,
+           (sockaddr*)&socket_address,
+           sizeof(socket_address));
   }
   void connect(const std::string& address, const uint16_t port) const
   {
@@ -70,7 +84,11 @@ class socket
 
   void bind(const sockaddr_in& socket_address) const
   {
-    invoke(::bind, "Failed to bind", fd, (sockaddr*)&socket_address, sizeof(socket_address));
+    invoke(::bind,
+           "Failed to bind",
+           fd,
+           (sockaddr*)&socket_address,
+           sizeof(socket_address));
   }
   void bind(const uint32_t address, const uint16_t port) const
   {
@@ -95,9 +113,16 @@ class socket
 
   void send(const std::string& message, int flags = 0) const
   {
-    invoke(::send, "Failed to send message", fd, message.c_str(), message.length(), flags);
+    invoke(::send,
+           "Failed to send message",
+           fd,
+           message.c_str(),
+           message.length(),
+           flags);
   }
-  void send_to(const std::string& message, const sockaddr_in& socket_address, int flags = 0) const
+  void send_to(const std::string& message,
+               const sockaddr_in& socket_address,
+               int flags = 0) const
   {
     invoke(::sendto,
            "Failed to send message",
@@ -108,7 +133,10 @@ class socket
            (sockaddr*)&socket_address,
            sizeof(socket_address));
   }
-  void send_to(const std::string& message, const std::string& address, const uint16_t port, int flags = 0) const
+  void send_to(const std::string& message,
+               const std::string& address,
+               const uint16_t port,
+               int flags = 0) const
   {
     auto socket_address = to_socket_address(address, port);
     send_to(message, socket_address, flags);
@@ -131,14 +159,21 @@ class socket
     return result;
   }
 
-  [[nodiscard]] std::pair<std::string, sockaddr_in> receive_from(size_t length, int flags = 0) const
+  [[nodiscard]] std::pair<std::string, sockaddr_in> receive_from(
+    size_t length,
+    int flags = 0) const
   {
     std::shared_ptr<char> buffer(new char[length]);
 
     sockaddr_in socket_address{};
     socklen_t address_length = sizeof(socket_address);
 
-    int count = ::recvfrom(fd, buffer.get(), length, flags, (sockaddr*)&socket_address, &address_length);
+    int count = ::recvfrom(fd,
+                           buffer.get(),
+                           length,
+                           flags,
+                           (sockaddr*)&socket_address,
+                           &address_length);
     if (count == -1) {
       if (errno == EAGAIN) {
         count = 0; // If we got EAGAIN then return an empty string (count = 0).
@@ -160,7 +195,9 @@ class socket
   int fd = -1;
 
   template<typename Function, typename... Args>
-  static void invoke(const Function& func, const std::string& failure_message, Args... args)
+  static void invoke(const Function& func,
+                     const std::string& failure_message,
+                     Args... args)
   {
     auto result = func(args...);
     if (result == -1) {
@@ -168,7 +205,8 @@ class socket
     }
   }
 
-  static sockaddr_in to_socket_address(const std::string& address, const uint16_t port)
+  static sockaddr_in to_socket_address(const std::string& address,
+                                       const uint16_t port)
   {
     sockaddr_in socket_address{};
     socket_address.sin_family = AF_INET;
@@ -177,7 +215,8 @@ class socket
 
     return socket_address;
   }
-  static sockaddr_in to_socket_address(const uint32_t address, const uint16_t port)
+  static sockaddr_in to_socket_address(const uint32_t address,
+                                       const uint16_t port)
   {
     sockaddr_in socket_address{};
     socket_address.sin_family = AF_INET;

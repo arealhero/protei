@@ -56,7 +56,8 @@ void server::accept_tcp_connections()
 
       slaves.push_back(slave);
 
-      std::cout << "Client connected (descriptor: " << slave.descriptor() << ")." << std::endl;
+      std::cout << "Client connected (descriptor: " << slave.descriptor()
+                << ")." << std::endl;
     }
   }
 }
@@ -71,7 +72,8 @@ void server::handle_tcp_events()
 
       if (request.empty()) {
         if (errno != EAGAIN) {
-          std::cout << "Client disconnected (descriptor: " << slave.descriptor() << ")." << std::endl;
+          std::cout << "Client disconnected (descriptor: " << slave.descriptor()
+                    << ")." << std::endl;
 
           slave.close();
 
@@ -89,7 +91,8 @@ void server::handle_tcp_events()
 void server::handle_udp_events()
 {
   if (loop.has_events(udp_master)) {
-    auto [request, socket_address] = udp_master.receive_from(MESSAGE_MAX_LENGTH);
+    auto [request, socket_address] =
+      udp_master.receive_from(MESSAGE_MAX_LENGTH);
 
     auto response = request_handler->handle(request);
     udp_master.send_to(response, socket_address);

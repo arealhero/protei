@@ -13,9 +13,11 @@ class sum_request_handler : public request_handler
   [[nodiscard]] std::string handle(const std::string& request) override;
 
  private:
-  [[nodiscard]] static std::vector<unsigned long> fetch_numbers(const std::string& request);
+  [[nodiscard]] static std::vector<unsigned long> fetch_numbers(
+    const std::string& request);
 
-  [[nodiscard]] static std::string make_response(const std::vector<unsigned long>& numbers);
+  [[nodiscard]] static std::string make_response(
+    const std::vector<unsigned long>& numbers);
 
   [[nodiscard]] static bool is_valid_number(const std::string& token);
 

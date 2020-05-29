@@ -18,7 +18,8 @@ std::string sum_request_handler::handle(const std::string& request)
   }
 }
 
-std::vector<unsigned long> sum_request_handler::fetch_numbers(const std::string& request)
+std::vector<unsigned long> sum_request_handler::fetch_numbers(
+  const std::string& request)
 {
   std::vector<unsigned long> numbers;
 
@@ -45,7 +46,8 @@ std::vector<unsigned long> sum_request_handler::fetch_numbers(const std::string&
   return numbers;
 }
 
-std::string sum_request_handler::make_response(const std::vector<unsigned long>& numbers)
+std::string sum_request_handler::make_response(
+  const std::vector<unsigned long>& numbers)
 {
   std::stringstream response;
 
@@ -89,7 +91,8 @@ void sum_request_handler::generate_exception(const std::string& noun)
   auto max = std::numeric_limits<unsigned long>::max();
 
   auto message =
-    std::string{ "Error: " + noun + " must be between " + std::to_string(min) + " and " + std::to_string(max) };
+    std::string{ "Error: " + noun + " must be between " + std::to_string(min) +
+                 " and " + std::to_string(max) };
 
   throw std::runtime_error{ message };
 }

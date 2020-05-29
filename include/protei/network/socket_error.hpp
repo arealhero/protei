@@ -2,6 +2,7 @@
 #define PROTEI_NETWORK_SOCKET_ERROR_HPP_
 
 #include <cerrno>
+#include <cstring>
 #include <stdexcept>
 #include <string>
 

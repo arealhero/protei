@@ -7,7 +7,10 @@ void server::init_tcp_socket(uint32_t address, uint16_t port)
 
   tcp_master.set_option(SO_REUSEADDR, 1);
   tcp_master.set_option(SO_REUSEPORT, 1);
+
+#if !defined(__linux__)
   tcp_master.set_option(SO_NOSIGPIPE, 1);
+#endif
 
   tcp_master.set_non_block();
 
@@ -51,7 +54,9 @@ void server::accept_tcp_connections()
   if (loop.has_events(tcp_master)) {
     auto slave = tcp_master.accept();
     if (slave.descriptor() != -1) {
+#if !defined(__linux__)
       slave.set_option(SO_NOSIGPIPE, 1);
+#endif
       slave.set_non_block();
 
       slaves.push_back(slave);
@@ -82,7 +87,12 @@ void server::handle_tcp_events()
         }
       } else {
         auto response = request_handler->handle(request);
-        slave.send(response);
+        slave.send(response
+#if defined(__linux__)
+                   ,
+                   MSG_NOSIGNAL
+#endif
+        );
       }
     }
   }

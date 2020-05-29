@@ -4,16 +4,16 @@
 #include <protei/network/socket.hpp>
 
 namespace server_side {
-class event_loop {
+class event_loop
+{
  public:
   void clear();
 
-  void watch(const protei::network::socket &socket);
+  void watch(const protei::network::socket& socket);
 
   int wait_for_events();
 
-  [[nodiscard]]
-  bool has_events(const protei::network::socket &socket) const;
+  [[nodiscard]] bool has_events(const protei::network::socket& socket) const;
 
  private:
   fd_set fds;

@@ -1,10 +1,10 @@
 #ifndef PROTEI_SERVER_SERVER_H_
 #define PROTEI_SERVER_SERVER_H_
 
-#include <list>
 #include <cstdint>
-#include <memory>
 #include <iostream>
+#include <list>
+#include <memory>
 
 #include <protei/network/socket.hpp>
 
@@ -14,7 +14,8 @@
 #include "../../config.h"
 
 namespace server_side {
-class server {
+class server
+{
  public:
   void init_tcp_socket(uint32_t address, uint16_t port);
   void init_udp_socket(uint32_t address, uint16_t port);

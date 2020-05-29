@@ -25,8 +25,8 @@ class udp_client_socket : public client_socket
     return message;
   }
 
-  [[nodiscard]]
-  bool skip_empty_request() const override {
+  [[nodiscard]] bool skip_empty_request() const override
+  {
     return true;
   }
 

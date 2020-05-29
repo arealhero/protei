@@ -6,7 +6,8 @@
 
 #include <protei/network/socket.hpp>
 
-class client_socket {
+class client_socket
+{
  public:
   virtual ~client_socket() = default;
 
@@ -14,8 +15,7 @@ class client_socket {
   virtual void send(const std::string& request) = 0;
   virtual std::string receive(size_t length) = 0;
 
-  [[nodiscard]]
-  virtual bool skip_empty_request() const = 0;
+  [[nodiscard]] virtual bool skip_empty_request() const = 0;
 
  protected:
   protei::network::socket socket;

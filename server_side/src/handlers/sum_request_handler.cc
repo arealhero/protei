@@ -1,13 +1,14 @@
 #include "sum_request_handler.h"
 
 #include <algorithm>
+#include <limits>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <sstream>
-#include <limits>
 
 namespace server_side::handlers {
-std::string sum_request_handler::handle(const std::string &request) {
+std::string sum_request_handler::handle(const std::string& request)
+{
   try {
     std::vector<unsigned long> numbers = fetch_numbers(request);
     std::sort(numbers.begin(), numbers.end());
@@ -17,7 +18,8 @@ std::string sum_request_handler::handle(const std::string &request) {
   }
 }
 
-std::vector<unsigned long> sum_request_handler::fetch_numbers(const std::string &request) {
+std::vector<unsigned long> sum_request_handler::fetch_numbers(const std::string& request)
+{
   std::vector<unsigned long> numbers;
 
   size_t pos;
@@ -43,7 +45,8 @@ std::vector<unsigned long> sum_request_handler::fetch_numbers(const std::string 
   return numbers;
 }
 
-std::string sum_request_handler::make_response(const std::vector<unsigned long> &numbers) {
+std::string sum_request_handler::make_response(const std::vector<unsigned long>& numbers)
+{
   std::stringstream response;
 
   if (!numbers.empty()) {
@@ -69,7 +72,8 @@ std::string sum_request_handler::make_response(const std::vector<unsigned long> 
   return response.str();
 }
 
-bool sum_request_handler::is_valid_number(const std::string &token) {
+bool sum_request_handler::is_valid_number(const std::string& token)
+{
   if (token.empty()) {
     return false;
   }
@@ -79,12 +83,14 @@ bool sum_request_handler::is_valid_number(const std::string &token) {
   });
 }
 
-void sum_request_handler::generate_exception(const std::string &noun) {
+void sum_request_handler::generate_exception(const std::string& noun)
+{
   auto min = std::numeric_limits<unsigned long>::min();
   auto max = std::numeric_limits<unsigned long>::max();
 
-  auto message = std::string{"Error: " + noun + " must be between " + std::to_string(min) + " and " + std::to_string(max)};
+  auto message =
+    std::string{ "Error: " + noun + " must be between " + std::to_string(min) + " and " + std::to_string(max) };
 
-  throw std::runtime_error{message};
+  throw std::runtime_error{ message };
 }
 }

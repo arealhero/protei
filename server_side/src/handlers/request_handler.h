@@ -4,12 +4,12 @@
 #include <string>
 
 namespace server_side::handlers {
-class request_handler {
+class request_handler
+{
  public:
   virtual ~request_handler() = default;
 
-  [[nodiscard]]
-  virtual std::string handle(const std::string& request) = 0;
+  [[nodiscard]] virtual std::string handle(const std::string& request) = 0;
 };
 }
 

@@ -15,6 +15,7 @@ class client_socket
   virtual void init(const std::string& address, uint16_t port) = 0;
   virtual void send(const std::string& request) = 0;
   virtual std::string receive(size_t length) = 0;
+  virtual void close() = 0;
 
   [[nodiscard]] virtual bool skip_empty_request() const = 0;
 

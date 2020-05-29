@@ -11,6 +11,8 @@ class udp_client_socket : public client_socket
   void send(const std::string& request) override;
   [[nodiscard]] std::string receive(size_t length) override;
 
+  void close() override;
+
   [[nodiscard]] bool skip_empty_request() const override
   {
     // Unlike TCP, UDP have no problems dealing with an empty request

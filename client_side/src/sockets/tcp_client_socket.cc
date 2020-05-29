@@ -23,4 +23,9 @@ std::string tcp_client_socket::receive(size_t length)
 {
   return socket.receive(length);
 }
+
+void tcp_client_socket::close() {
+  socket.shutdown();
+  socket.close();
+}
 }

@@ -19,4 +19,8 @@ std::string udp_client_socket::receive(size_t length)
   auto [message, socket_address] = socket.receive_from(length);
   return message;
 }
+
+void udp_client_socket::close() {
+  socket.close();
+}
 }

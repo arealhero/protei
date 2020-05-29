@@ -47,9 +47,7 @@ int main(int argc, char* argv[])
   std::string request;
 
   try {
-    while (true) {
-      std::getline(std::cin, request);
-
+    while (std::getline(std::cin, request)) {
       if (request.empty() && client->skip_empty_request()) {
         std::cout << "This type of connection cannot send an empty request."
                   << std::endl;
@@ -65,6 +63,8 @@ int main(int argc, char* argv[])
         std::cout << response << std::endl;
       }
     }
+
+    client->close();
   } catch (const std::exception& e) {
     std::cerr << "Error: " << e.what() << std::endl;
     return 1;

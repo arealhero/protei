@@ -186,6 +186,11 @@ class socket
     return { result, socket_address };
   }
 
+  void shutdown(int how = SHUT_RDWR) const
+  {
+    invoke(::shutdown, "Failed to shut down the connection", fd, how);
+  }
+
   [[nodiscard]] inline int descriptor() const
   {
     return fd;
